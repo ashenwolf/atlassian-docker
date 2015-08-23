@@ -15,9 +15,9 @@ CONFLUENCE_DB=${CONFLUENCE_DB:-confdb}
 CONFLUENCE_USER=${CONFLUENCE_USER:-confdbuser}
 CONFLUENCE_PASS=${CONFLUENCE_PASS:-jellyfish}
 
-if [ "$(docker run busybox echo 'test')" != "test" ]; then
+if [ "$(docker --rm run busybox echo 'test')" != "test" ]; then
   SUDO=sudo
-  if [ "$($SUDO docker run busybox echo 'test')" != "test" ]; then
+  if [ "$($SUDO docker --rm run busybox echo 'test')" != "test" ]; then
     echo "Could not run docker"
     exit 1
   fi
