@@ -27,3 +27,15 @@ RUN mkdir -p /opt/atlassian-home
 ADD common.bash /usr/local/share/atlassian/common.bash
 RUN chgrp atlassian /usr/local/share/atlassian/common.bash
 RUN chmod g+w /usr/local/share/atlassian/common.bash
+
+RUN openssl s_client -connect marketplace.atlassian.com:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > marketplace.atlassian.com.crt
+RUN openssl s_client -connect plugins.atlassian.com:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > plugins.atlassian.com.crt
+RUN openssl s_client -connect dq1dnt4af4eyy.cloudfront.net:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > dq1dnt4af4eyy.cloudfront.net.crt
+RUN openssl s_client -starttls smtp -crlf -connect smtp.gmail.com:587 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > smtp.gmail.com.crt
+
+RUN keytool -importcert -storepass changeit -alias marketplace.atlassian.com:443 -keystore $JAVA_HOME/jre/lib/security/cacerts -file marketplace.atlassian.com.crt -noprompt
+RUN keytool -importcert -storepass changeit alias plugins.atlassian.com:443 -keystore $JAVA_HOME/jre/lib/security/cacerts -file plugins.atlassian.com.crt -noprompt
+RUN keytool -importcert -storepass changeit -alias dq1dnt4af4eyy.cloudfront.net:443 -keystore $JAVA_HOME/jre/lib/security/cacerts -file dq1dnt4af4eyy.cloudfront.net.crt -noprompt
+RUN keytool -importcert -storepass changeit -alias smtp.gmail.com:587 -keystore $JAVA_HOME/jre/lib/security/cacerts -file smtp.gmail.com.crt -noprompt
+
+
