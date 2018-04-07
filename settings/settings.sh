@@ -1,0 +1,17 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=${POSTGRES_USER:-postgres}
+
+LOGIN_BASE_URL=http://albert.skoll.com.ua:8095/
+CROWD_URL=${LOGIN_BASE_URL}/crowd
+CROWD_DB=${CROWD_DB:-crowddb}
+CROWD_USER=${CROWD_USER:-crowddbusr}
+CROWD_PASS=${CROWD_PASS:-jellyfish}
+
+JIRA_DB=${JIRA_DB:-jiradb}
+JIRA_USER=${JIRA_USER:-jiradbuser}
+JIRA_PASS=${JIRA_PASS:-jellyfish}
+
+CONFLUENCE_DB=${CONFLUENCE_DB:-confdb}
+CONFLUENCE_USER=${CONFLUENCE_USER:-confdbuser}
+CONFLUENCE_PASS=${CONFLUENCE_PASS:-jellyfish}
+

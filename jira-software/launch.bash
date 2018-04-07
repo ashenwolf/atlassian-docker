@@ -22,7 +22,7 @@ if [ -n "$DATABASE_URL" ]; then
     SCHEMA='<schema-name>public</schema-name>'
   fi
 
-  cat <<END > /opt/atlassian-home/dbconfig.xml
+  cat <<END > /opt/atlassian-home/jira/dbconfig.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <jira-database-config>
   <name>defaultDS</name>

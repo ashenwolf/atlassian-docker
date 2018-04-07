@@ -5,7 +5,8 @@ MAINTAINER Sergii Gulenok <graywolfs@gmail.com>
 
 # Install Crowd
 
-ENV CROWD_VERSION 2.8.3
+ARG CROWD_VERSION=2.8.3
+ENV CROWD_VERSION ${CROWD_VERSION}
 ENV SPLASH_CONTEXT ROOT
 
 ADD launch.bash /launch
