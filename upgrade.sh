@@ -2,7 +2,7 @@
 . settings/settings.sh
 
 CROWD_VERSION=2.8.3
-JIRA_VERSION=7.8.2
+JIRA_VERSION=8.1.0
 CONFLUENCE_VERSION=6.8.1
 
 if [ "$(docker run --rm busybox echo 'test')" != "test" ]; then
