@@ -53,3 +53,5 @@ END
 fi
 
 /opt/jira/bin/start-jira.sh -fg
+#--disable-all-addons
+

@@ -2,8 +2,8 @@
 . settings/settings.sh
 
 CROWD_VERSION=2.8.3
-JIRA_VERSION=8.1.0
-CONFLUENCE_VERSION=6.8.1
+JIRA_VERSION=8.8.1
+CONFLUENCE_VERSION=7.4.0
 
 if [ "$(docker run --rm busybox echo 'test')" != "test" ]; then
   SUDO=sudo
@@ -33,14 +33,14 @@ fi
 if [ $1 = "jira" ]; then 
   $SUDO docker build  --build-arg JIRA_VERSION=$JIRA_VERSION -t graywolf/jira-software:$JIRA_VERSION jira-software
   #$SUDO docker stop jira-software
-  $SUDO docker run -d --name jira-software-v2-${JIRA_VERSION} -v /var/opt/atlassian:/opt/atlassian-home --link postgres2:db -e DATABASE_URL=postgresql://${JIRA_USER}:${JIRA_PASS}@db/${JIRA_DB} -p 8080:8080 graywolf/jira-software:$JIRA_VERSION
+  $SUDO docker run -d --name jira-software-v2-${JIRA_VERSION} -v /var/opt/atlassian:/opt/atlassian-home --link postgres12:db -e DATABASE_URL=postgresql://${JIRA_USER}:${JIRA_PASS}@db/${JIRA_DB} -p 8080:8080 graywolf/jira-software:$JIRA_VERSION
 fi
 
 # Confluence
 if [ $1 = "confluence" ]; then
   $SUDO docker build -t graywolf/confluence:$CONFLUENCE_VERSION --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} confluence
   #$SUDO docker stop confluence
-  $SUDO docker run -d --name confluence-v2-${CONFLUENCE_VERSION} -v /var/opt/atlassian:/opt/atlassian-home --link postgres2:db -e DATABASE_URL=postgresql://${CONFLUENCE_USER}:${CONFLUENCE_PASS}@db/${CONFLUENCE_DB} -p 8090:8090 graywolf/confluence:$CONFLUENCE_VERSION
+  $SUDO docker run -d --name confluence-v2-${CONFLUENCE_VERSION} -v /var/opt/atlassian:/opt/atlassian-home --link postgres12:db -e DATABASE_URL=postgresql://${CONFLUENCE_USER}:${CONFLUENCE_PASS}@db/${CONFLUENCE_DB} -p 8090:8090 graywolf/confluence:$CONFLUENCE_VERSION
 fi
 }
 
@@ -53,7 +53,4 @@ done
 
 echo "Containers running..."
 $SUDO docker ps -a
-
-echo "IP Addresses of containers:"
-$SUDO docker inspect -f '{{ .Config.Hostname }} {{ .Config.Image }} {{ .NetworkSettings.IPAddress }}' postgres crowd jira confluence
 
